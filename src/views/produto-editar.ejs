@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Produto</title>
+    <%- include('./styleProduto.ejs') %>
+  </head>
+  <body>
+    <h2>Editar Produtos</h2>
+    <% let pos=0; for (let i = 0; i < p.length; i++) { if(p[i].id ==posicao){
+    pos=i; break; } } %>
+    <% if(c.length>0){ %> 
+      <form action="/produto-editar" method="post">
+        <fieldset>
+          <input type="hidden" name="pos" value="<%- pos %>">
+          <label for="nome">Nome</label>
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            placeholder="Nome"
+            required
+            value="<%- p[pos].dados[0] %>"
+          />
+          <label for="preco">Preço</label>
+          <input
+            type="text"
+            name="preco"
+            id="preco"
+            placeholder="Preços"
+            required
+            value="<%- p[pos].dados[1] %> "
+          />
+          <label for="categoria">Categoria</label>
+          <select name="categoria" id="categoria">
+            <% for(let i = 0; i <c.length; i++) {%> 
+              <option value="<%- c[i].nome %>" <% if(c[i].nome == p[pos].dados[2]){ %> selected<% } %>  ><%- c[i].nome %></option>
+            <% } %>
+          </select>
+          <% for (let i = 3; i < p[pos].nome.length; i++) {%>
+            <label for="<%-p[pos].nome[i] %>"><%- p[pos].nome[i] %></label>
+            <input
+              type="text"
+              name="<%- p[pos].nome[i] %>"
+              id="<%- p[pos].nome[i] %>"
+              placeholder="<%- p[pos].nome[i] %>"
+              required
+              value="<%- p[pos].dados[i] %>">
+          <%} %>
+          <button type="submit"><i class="fa-solid fa-arrows-rotate"></i> Atualizar Cadastro</button>
+        </fieldset>
+      </form>
+    <% }else{ %> 
+      <p class="alerta">
+        <i class="fa-solid fa-triangle-exclamation"></i> Não é possível editar um produto, sem nenhuma categoria cadastrada <i class="fa-solid fa-triangle-exclamation"></i>
+      </p>
+      <% } %> 
+    
+    <p class="voltar"><a href="/"><i class="fa-solid fa-angle-left"></i> Index</a> <a href="/produto"><i class="fa-solid fa-angle-left"></i> Produtos</a></p>
+
+    <script
+      src="https://kit.fontawesome.com/09c2a18d79.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
